@@ -76,6 +76,7 @@ export interface FinishedTodoListProp {
 
 export interface TodoListProps {
     todoList: TodoItemList;
+    finishedList: FinishedTodoItemList;
     // TodoListProp: TodoListProp; 
     onUpdateExistingItem: (targetId: number) => void;
     onDeleteExistingItem: (targetId: number) => void;

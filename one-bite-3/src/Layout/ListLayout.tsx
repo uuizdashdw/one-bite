@@ -1,5 +1,7 @@
-// Header
+// Hooks
 import { useState, useRef, useReducer } from "react"
+
+// Header
 import Header from "../components/Header"
 
 // Views
@@ -89,7 +91,8 @@ const ListLayout = (): JSX.Element => {
             </section>
             
             <section className="section">
-                <ToDoList {...todoList} 
+                <ToDoList {...todoList}
+                          {...todoList.finishedList}
                           onUpdateExistingItem={onUpdateExistingItem} 
                           onDeleteExistingItem={onDeleteExistingItem}
                           onFinishExistingItem={onFinishExistingItem} />

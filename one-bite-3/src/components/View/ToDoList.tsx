@@ -1,4 +1,5 @@
-import { useEffect, useState, ChangeEvent } from 'react';
+// Hook
+import { useEffect, useState, useMemo, ChangeEvent } from 'react';
 
 // Css
 import '../../css/TodoList.css';
@@ -10,12 +11,11 @@ import TodoItem from './TodoItem';
 import { TodoItemList, TodoListProps } from '../../TodoTypes';
 import type { TodoItemType } from '../../TodoTypes';
 
-const ToDoList = ( { todoList, onUpdateExistingItem, onDeleteExistingItem, onFinishExistingItem }: TodoListProps ): JSX.Element => {
+const ToDoList = ( { todoList, finishedList, onUpdateExistingItem, onDeleteExistingItem, onFinishExistingItem }: TodoListProps ): JSX.Element => {
 
     const [ search, setSearch ] = useState('');
     const [ debouncedSearch, setDebouncedSearch ] = useState('')
     
-
     // Searching TodoItem Function
     const onSearchingTodoItem = (event: ChangeEvent<HTMLInputElement>) => {
         const target = event.target;
@@ -43,13 +43,25 @@ const ToDoList = ( { todoList, onUpdateExistingItem, onDeleteExistingItem, onFin
             .includes(debouncedSearch.toLowerCase()));
     }
 
+    // Filtered Todo Data List
     const filteredTodoList = getFilteredData();
 
+    // Count useMemo
+    const { totalCount, doneCount } = useMemo(() =>{
+        const totalCount = todoList.length; // Total & Not Done
+        const doneCount = finishedList.length; // Done
+
+        return { totalCount, doneCount }
+    }, [todoList, finishedList]);
+  
     return (
         <div className='TodoList'>
             <h4 className='title'>Todo List 💎✨</h4>
+            <div>Total : {totalCount}</div>
+            <div>Done : {doneCount}</div>
+            <div>Not Done : {totalCount}</div>
             {
-                todoList.length === 0 ? (
+                !todoList ? (
                     <p className='noTodo'><strong>해야 할 일이 없네요..</strong> 😓</p>
                 ) : (
                     <>
