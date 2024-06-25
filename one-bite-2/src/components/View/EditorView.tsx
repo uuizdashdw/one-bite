@@ -23,9 +23,9 @@ const EditorView = ({ onCreateNewTodoItem }: EditorViewProp): JSX.Element => {
         if(content !== '') {
             onCreateNewTodoItem(content);
             setContent('');
-            return alert('추가 되었습니다');
+            alert('추가 되었습니다');
         } else {
-            return alert('새로운 TODO 를 입력해주세요');
+            alert('새로운 TODO 를 입력해주세요');
         }
     }
 
@@ -36,8 +36,7 @@ const EditorView = ({ onCreateNewTodoItem }: EditorViewProp): JSX.Element => {
 
     // Focusing on Target
     useEffect(() => {
-        const target = contentRef.current as HTMLInputElement;
-        if(content === '') target.focus();
+        if(content === '') contentRef.current?.focus();
     }, [content])
 
     return (
