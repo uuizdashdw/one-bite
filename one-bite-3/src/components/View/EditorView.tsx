@@ -22,21 +22,29 @@ const EditorView = ({ onCreateNewTodoItem }: EditorViewProp): JSX.Element => {
     const onSubmitTodoItem = (): void => {
         if(content !== '') {
             onCreateNewTodoItem(content);
-            alert('추가 되었습니다');
             setContent('');
-            return 
+            alert('추가 되었습니다');
         } else {
-            return alert('새로운 TODO 를 입력해주세요');
+            alert('새로운 TODO 를 입력해주세요');
         }
     }
 
+    // Boolean to Guard the Press Enter Twice Error
+    let submitInProgress = false;
+
     // Submit Todo Item by Enter Key
-    const onSubmitByEnterKey = (event: KeyboardEvent<HTMLInputElement>) => {
-        if(event.key === 'Enter') {
-            onSubmitTodoItem();
-            setContent('');
+    const onSubmitByEnterKey = (event: KeyboardEvent<HTMLInputElement>): void => {
+        if(event.key === 'Enter' && !submitInProgress) {
+            event.preventDefault();
+            submitInProgress = !submitInProgress;
+            
+            // Prevent the Keyboard Event Trigger
+            setTimeout(() => {
+                onSubmitTodoItem();
+                setContent('');
+                submitInProgress = !submitInProgress;
+            }, 0);
         }
-        
     }
 
     // Focusing on Target

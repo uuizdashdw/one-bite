@@ -17,7 +17,7 @@ const ToDoList = ( { todoList, finishedList, onUpdateExistingItem, onDeleteExist
     const [ debouncedSearch, setDebouncedSearch ] = useState('')
     
     // Searching TodoItem Function
-    const onSearchingTodoItem = (event: ChangeEvent<HTMLInputElement>) => {
+    const onSearchingTodoItem = (event: ChangeEvent<HTMLInputElement>): void => {
         const target = event.target;
         setSearch(target.value);
     }

@@ -25,7 +25,7 @@ const TodoItem = (
             alert('고생하셨습니다!');
             onFinishExistingItem(id, isDone);
         } else {
-            alert('아직이시네요..');
+            alert('완료하시려면 체크박스를 체크해주세요!');
         }
     }
 
