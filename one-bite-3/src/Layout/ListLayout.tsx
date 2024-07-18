@@ -1,8 +1,5 @@
 // Hooks
-import { useState, useRef, useReducer } from "react"
-
-// Header
-import Header from "../components/Header"
+import { useState, useRef, useReducer, memo } from "react";
 
 // Views
 import EditorView from "../components/View/EditorView"
@@ -84,26 +81,25 @@ const ListLayout = (): JSX.Element => {
 
     return (
         <>
-        <Header />
-        <main className="main">
-            <section className="section">
-                <EditorView onCreateNewTodoItem={onCreateNewTodoItem} />
-            </section>
-            
-            <section className="section">
-                <ToDoList {...todoList}
-                          {...todoList.finishedList}
-                          onUpdateExistingItem={onUpdateExistingItem} 
-                          onDeleteExistingItem={onDeleteExistingItem}
-                          onFinishExistingItem={onFinishExistingItem} />
-            </section>
+            <main className="main">
+                <section className="section">
+                    <EditorView onCreateNewTodoItem={onCreateNewTodoItem} />
+                </section>
+                
+                <section className="section">
+                    <ToDoList {...todoList}
+                            {...todoList.finishedList}
+                            onUpdateExistingItem={onUpdateExistingItem} 
+                            onDeleteExistingItem={onDeleteExistingItem}
+                            onFinishExistingItem={onFinishExistingItem} />
+                </section>
 
-            <section className="section">
-                <FinishedTodoList finishedList={todoList.finishedList} />
-            </section>
-        </main>
+                <section className="section">
+                    <FinishedTodoList finishedList={todoList.finishedList} />
+                </section>
+            </main>
         </>
     )
 }
 
-export default ListLayout
+export default memo(ListLayout);

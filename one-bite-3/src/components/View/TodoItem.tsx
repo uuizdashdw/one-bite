@@ -1,8 +1,10 @@
 // Types
 import { TodoItemProps } from '../../TodoTypes';
 
-import '../../css/TodoItem.css';
+// Memo
+import { memo } from 'react';
 
+import '../../css/TodoItem.css';
 
 
 const TodoItem = ( 
@@ -55,4 +57,11 @@ const TodoItem = (
     )
 }
 
-export default TodoItem;
+export default memo(TodoItem, (prevProps, nextProps) => {
+    return (
+        prevProps.id === nextProps.id &&
+        prevProps.isDone === nextProps.isDone &&
+        prevProps.content === nextProps.content &&
+        prevProps.date === nextProps.date
+    )
+});

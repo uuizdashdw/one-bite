@@ -1,5 +1,5 @@
 // Hook
-import { useEffect, useState, useMemo, ChangeEvent } from 'react';
+import { useEffect, useState, useMemo, ChangeEvent, memo } from 'react';
 
 // Css
 import '../../css/TodoList.css';
@@ -95,4 +95,4 @@ const ToDoList = ( { todoList, finishedList, onUpdateExistingItem, onDeleteExist
     )
 }
 
-export default ToDoList;
+export default memo(ToDoList);
