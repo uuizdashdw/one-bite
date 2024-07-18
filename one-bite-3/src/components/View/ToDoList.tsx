@@ -47,11 +47,12 @@ const ToDoList = ( { todoList, finishedList, onUpdateExistingItem, onDeleteExist
     const filteredTodoList = getFilteredData();
 
     // Count useMemo
-    const { totalCount, doneCount } = useMemo(() =>{
-        const totalCount = todoList.length; // Total & Not Done
+    const { totalCount, doneCount, notDoneCount } = useMemo(() =>{
+        const totalCount = todoList.length + finishedList.length; // Total
         const doneCount = finishedList.length; // Done
+        const notDoneCount = totalCount - doneCount; // Not Done
 
-        return { totalCount, doneCount }
+        return { totalCount, doneCount, notDoneCount }
     }, [todoList, finishedList]);
   
     return (
@@ -59,7 +60,7 @@ const ToDoList = ( { todoList, finishedList, onUpdateExistingItem, onDeleteExist
             <h4 className='title'>Todo List 💎✨</h4>
             <div>Total : {totalCount}</div>
             <div>Done : {doneCount}</div>
-            <div>Not Done : {totalCount}</div>
+            <div>Not Done : {notDoneCount}</div>
             {
                 !todoList ? (
                     <p className='noTodo'><strong>해야 할 일이 없네요..</strong> 😓</p>
