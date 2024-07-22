@@ -30,7 +30,7 @@ const EditorView = ({ onCreateNewTodoItem }: EditorViewProp): JSX.Element => {
     }
 
     // Submit Todo Item by Enter Key
-    const onSubmitByEnterKey = (event: KeyboardEvent<HTMLInputElement>) => {
+    const onSubmitByEnterKey = (event: KeyboardEvent<HTMLInputElement>): void => {
         if(event.key === 'Enter') onSubmitTodoItem();
     }
 
