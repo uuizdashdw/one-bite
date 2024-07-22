@@ -1,5 +1,5 @@
 // Hooks
-import { useState, useRef, useReducer, memo, useCallback, createContext } from "react";
+import { useState, useRef, useReducer, memo, useCallback, createContext, useMemo } from "react";
 
 // Views
 import EditorView from "../components/View/EditorView"
@@ -7,16 +7,16 @@ import ToDoList from "../components/View/ToDoList"
 import FinishedTodoList from "../components/View/FinishedTodoList"
 
 // Types
-import { AppState, TodoContextType, TodoDispatchType } from "../TodoTypes"
+import { AppState, TodoStateContextType, TodoDispatchContextType } from "../TodoTypes"
 
 // Reducer
 import { reducer } from "../reducer/reducer"
 
-export const TodoStateContext = createContext<TodoContextType>({
+export const TodoStateContext = createContext<TodoStateContextType>({
     todoList: { todoList: [], finishedList: [] },
 });
 
-export const TodoDispatchContext = createContext<TodoDispatchType>({
+export const TodoDispatchContext = createContext<TodoDispatchContextType>({
     onCreateNewTodoItem: (content: string) => {},
     onUpdateExistingItem: (targetId: number) => {},
     onDeleteExistingItem: (targetId: number) => {},
@@ -90,18 +90,20 @@ const ListLayout = (): JSX.Element => {
         })
     }, [tossedContent]);
 
-
+    const memoizedDispatch = useMemo(() => {
+        return { 
+            onCreateNewTodoItem, 
+            onDeleteExistingItem, 
+            onFinishExistingItem,
+            onUpdateExistingItem,
+        }
+    }, [])
 
     return (
         <>
             <main className="main">
                 <TodoStateContext.Provider value={{todoList}}>
-                    <TodoDispatchContext.Provider value={{
-                        onCreateNewTodoItem,
-                        onDeleteExistingItem,
-                        onFinishExistingItem,
-                        onUpdateExistingItem
-                    }}>
+                    <TodoDispatchContext.Provider value={memoizedDispatch}>
                         <section className="section">
                             <EditorView />
                         </section>
