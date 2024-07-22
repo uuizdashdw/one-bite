@@ -1,5 +1,5 @@
 // Hooks
-import { useState, useRef, useReducer, memo, useCallback } from "react";
+import { useState, useRef, useReducer, memo, useCallback, createContext } from "react";
 
 // Views
 import EditorView from "../components/View/EditorView"
@@ -7,10 +7,18 @@ import ToDoList from "../components/View/ToDoList"
 import FinishedTodoList from "../components/View/FinishedTodoList"
 
 // Types
-import { AppState } from "../TodoTypes"
+import { AppState, TodoContextType } from "../TodoTypes"
 
 // Reducer
 import { reducer } from "../reducer/reducer"
+
+export const TodoContext = createContext<TodoContextType>({
+    todoList: { todoList: [], finishedList: [] },
+    onCreateNewTodoItem: (content: string): void => {},
+    onUpdateExistingItem: (targetId: number): void => {},
+    onDeleteExistingItem: (targetId: number) => {},
+    onFinishExistingItem: (targetId: number, isDone: boolean) => {},
+});
 
 const ListLayout = (): JSX.Element => {
 
@@ -84,21 +92,25 @@ const ListLayout = (): JSX.Element => {
     return (
         <>
             <main className="main">
-                <section className="section">
-                    <EditorView onCreateNewTodoItem={onCreateNewTodoItem} />
-                </section>
-                
-                <section className="section">
-                    <ToDoList {...todoList}
-                            {...todoList.finishedList}
-                            onUpdateExistingItem={onUpdateExistingItem} 
-                            onDeleteExistingItem={onDeleteExistingItem}
-                            onFinishExistingItem={onFinishExistingItem} />
-                </section>
+                <TodoContext.Provider value={{
+                    todoList,
+                    onCreateNewTodoItem,
+                    onUpdateExistingItem,
+                    onDeleteExistingItem,
+                    onFinishExistingItem
+                }}>
+                    <section className="section">
+                        <EditorView />
+                    </section>
+                    
+                    <section className="section">
+                        <ToDoList />
+                    </section>
 
-                <section className="section">
-                    <FinishedTodoList finishedList={todoList.finishedList} />
-                </section>
+                    <section className="section">
+                        <FinishedTodoList />
+                    </section>
+                </TodoContext.Provider>
             </main>
         </>
     )

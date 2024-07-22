@@ -1,12 +1,15 @@
-import { KeyboardEvent, ChangeEvent, useState, useRef, useEffect } from 'react';
+import { KeyboardEvent, ChangeEvent, useState, useRef, useEffect, useContext } from 'react';
 
 // Css
 import '../../css/EditorView.css';
 
-// Type
-import { EditorViewProp } from '../../TodoTypes';
 
-const EditorView = ({ onCreateNewTodoItem }: EditorViewProp): JSX.Element => {
+// Context
+import { TodoContext } from '../../Layout/ListLayout';
+
+const EditorView = (): JSX.Element => {
+    
+    const { onCreateNewTodoItem } = useContext(TodoContext);
     
     // Content State 
     const [content, setContent] = useState('');

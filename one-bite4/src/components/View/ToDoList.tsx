@@ -1,5 +1,5 @@
 // Hook
-import { useEffect, useState, useMemo, ChangeEvent, memo } from 'react';
+import { useEffect, useState, useMemo, ChangeEvent, memo, useContext } from 'react';
 
 // Css
 import '../../css/TodoList.css';
@@ -8,10 +8,14 @@ import '../../css/TodoList.css';
 import TodoItem from './TodoItem';
 
 // Type 
-import { TodoItemList, TodoListProps } from '../../TodoTypes';
-import type { TodoItemType } from '../../TodoTypes';
+import type { TodoItemType, TodoItemList } from '../../TodoTypes';
 
-const ToDoList = ( { todoList, finishedList, onUpdateExistingItem, onDeleteExistingItem, onFinishExistingItem }: TodoListProps ): JSX.Element => {
+// Context
+import { TodoContext } from '../../Layout/ListLayout';
+
+const ToDoList = (): JSX.Element => {
+
+    const { todoList } = useContext(TodoContext);
 
     const [ search, setSearch ] = useState('');
     const [ debouncedSearch, setDebouncedSearch ] = useState('')
@@ -35,9 +39,9 @@ const ToDoList = ( { todoList, finishedList, onUpdateExistingItem, onDeleteExist
 
     // Data Filtering
     const getFilteredData = (): TodoItemList => {
-        if(debouncedSearch === '') return todoList;
+        if(debouncedSearch === '') return todoList.todoList;
 
-        return todoList.filter((todo: TodoItemType) => 
+        return todoList.todoList.filter((todo: TodoItemType) => 
             todo.content
             .toLowerCase()
             .includes(debouncedSearch.toLowerCase()));
@@ -48,12 +52,12 @@ const ToDoList = ( { todoList, finishedList, onUpdateExistingItem, onDeleteExist
 
     // Count useMemo
     const { totalCount, doneCount, notDoneCount } = useMemo(() =>{
-        const totalCount = todoList.length + finishedList.length; // Total
-        const doneCount = finishedList.length; // Done
+        const totalCount = todoList.todoList.length + todoList.finishedList.length; // Total
+        const doneCount = todoList.finishedList.length; // Done
         const notDoneCount = totalCount - doneCount; // Not Done
 
         return { totalCount, doneCount, notDoneCount }
-    }, [todoList, finishedList]);
+    }, [todoList.todoList, todoList.finishedList]);
   
     return (
         <div className='TodoList'>
@@ -62,7 +66,7 @@ const ToDoList = ( { todoList, finishedList, onUpdateExistingItem, onDeleteExist
             <div>Done : {doneCount}</div>
             <div>Not Done : {notDoneCount}</div>
             {
-                !todoList ? (
+                !todoList.todoList ? (
                     <p className='noTodo'><strong>해야 할 일이 없네요..</strong> 😓</p>
                 ) : (
                     <>
@@ -76,12 +80,7 @@ const ToDoList = ( { todoList, finishedList, onUpdateExistingItem, onDeleteExist
                             { 
                                 filteredTodoList.map((todo, idx) => (
                                     <li key={idx}>
-                                        <TodoItem 
-                                            {...todo} 
-                                            onUpdateExistingItem={onUpdateExistingItem}
-                                            onDeleteExistingItem={onDeleteExistingItem}
-                                            onFinishExistingItem={onFinishExistingItem} 
-                                        />
+                                        <TodoItem {...todo} />
                                     </li>
                                 ))    
                             }

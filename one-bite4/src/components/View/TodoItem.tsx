@@ -1,15 +1,18 @@
 // Types
-import { TodoItemProps } from '../../TodoTypes';
+import { TodoItemType } from '../../TodoTypes';
 
 // Memo
-import { memo } from 'react';
+import { memo, useContext } from 'react';
 
 import '../../css/TodoItem.css';
 
+// Context
+import { TodoContext } from '../../Layout/ListLayout';
 
-const TodoItem = ( 
-    { id, isDone, content, date, onUpdateExistingItem, onDeleteExistingItem, onFinishExistingItem }: TodoItemProps 
-): JSX.Element => {
+
+const TodoItem = ({ id, isDone, content, date  }: TodoItemType): JSX.Element => {
+
+    const { onUpdateExistingItem, onDeleteExistingItem, onFinishExistingItem } = useContext(TodoContext);
 
     // Change Checkbox Value
     const onChangeCheckboxValue = (): void => {

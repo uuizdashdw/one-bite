@@ -5,7 +5,8 @@ export interface TodoItemType {
     date: string;
 }
 
-export type TodoItemList = TodoItemType[];
+type TodoItemList = TodoItemType[];
+
 export interface AppState {
     todoList: TodoItemList;
     finishedList: TodoItemList;
@@ -40,46 +41,11 @@ interface FinishAction {
 export type Action = CreateAction | UpdateAction | DeleteAction | RemoveAction | FinishAction;
 
 
-// Finished Todo List
-export type FinishedTodoItemList = TodoItemType[] | [];
-
-// Props
-export interface EditorViewProp {
+// Context
+export interface TodoContextType {
+    todoList: AppState;
     onCreateNewTodoItem: (content: string) => void;
-}
-
-export interface TodoListProp {
-    todoList: TodoItemList;
-}
-
-export interface TodoItemListProp {
-    todoList: TodoItemType;
-}
-
-interface TodoListChangeProp {
-    onUpdateExistingItem: (targetId: number) => void;
-}
-
-interface TodoListDeleteProp {
-    onDeleteExistingItem: (targetId: number) => void;
-}
-
-interface TodoListFinishProp {
-    onFinishExistingItem: (targetId: number, isDone: boolean) => void;
-}
-
-
-// Finished Item's Props
-export interface FinishedTodoListProp {
-    finishedList: FinishedTodoItemList;
-}
-
-export interface TodoListProps {
-    todoList: TodoItemList;
-    finishedList: FinishedTodoItemList;
-    // TodoListProp: TodoListProp; 
     onUpdateExistingItem: (targetId: number) => void;
     onDeleteExistingItem: (targetId: number) => void;
     onFinishExistingItem: (targetId: number, isDone: boolean) => void;
 }
-export type TodoItemProps = TodoItemType & TodoListChangeProp & TodoListDeleteProp & TodoListFinishProp;

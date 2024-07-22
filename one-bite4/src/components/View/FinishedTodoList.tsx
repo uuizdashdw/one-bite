@@ -1,15 +1,19 @@
+import { useContext } from 'react';
+
 // Css
 import '../../css/FinishedTodoList.css';
 
 // Finished Item
 import FinishedTodoItem from "./FinishedTodoItem";
 
-// Types
-// import { FinishedTodoListProp } from '../../TodoTypes';
-import { FinishedTodoListProp } from '../../TodoTypes';
+// Context
+import { TodoContext } from '../../Layout/ListLayout';
 
+const FinishedTodoList = () => {
 
-const FinishedTodoList = ({ finishedList }: FinishedTodoListProp) => {
+    const { todoList } = useContext(TodoContext);
+    const finishedList = todoList.finishedList;
+
     return (
         <div className="finishedList">
             <h4 className='title'>Finished Todo List 💎✨</h4>
