@@ -7,11 +7,13 @@ import '../../css/FinishedTodoList.css';
 import FinishedTodoItem from "./FinishedTodoItem";
 
 // Context
-import { TodoContext } from '../../Layout/ListLayout';
+import { TodoStateContext } from '../../Layout/ListLayout';
+
+import { TodoStateContextType } from '../../TodoTypes';
 
 const FinishedTodoList = () => {
 
-    const { todoList } = useContext(TodoContext);
+    const { todoList } = useContext<TodoStateContextType>(TodoStateContext);
     const finishedList = todoList.finishedList;
 
     return (

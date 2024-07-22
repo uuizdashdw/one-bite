@@ -8,14 +8,14 @@ import '../../css/TodoList.css';
 import TodoItem from './TodoItem';
 
 // Type 
-import type { TodoItemType, TodoItemList } from '../../TodoTypes';
+import type { TodoItemType, TodoItemList, TodoStateContextType } from '../../TodoTypes';
 
 // Context
-import { TodoContext } from '../../Layout/ListLayout';
+import { TodoStateContext } from '../../Layout/ListLayout';
 
 const ToDoList = (): JSX.Element => {
 
-    const { todoList } = useContext(TodoContext);
+    const { todoList } = useContext<TodoStateContextType>(TodoStateContext);
 
     const [ search, setSearch ] = useState('');
     const [ debouncedSearch, setDebouncedSearch ] = useState('')

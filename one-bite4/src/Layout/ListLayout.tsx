@@ -7,15 +7,18 @@ import ToDoList from "../components/View/ToDoList"
 import FinishedTodoList from "../components/View/FinishedTodoList"
 
 // Types
-import { AppState, TodoContextType } from "../TodoTypes"
+import { AppState, TodoContextType, TodoDispatchType } from "../TodoTypes"
 
 // Reducer
 import { reducer } from "../reducer/reducer"
 
-export const TodoContext = createContext<TodoContextType>({
+export const TodoStateContext = createContext<TodoContextType>({
     todoList: { todoList: [], finishedList: [] },
-    onCreateNewTodoItem: (content: string): void => {},
-    onUpdateExistingItem: (targetId: number): void => {},
+});
+
+export const TodoDispatchContext = createContext<TodoDispatchType>({
+    onCreateNewTodoItem: (content: string) => {},
+    onUpdateExistingItem: (targetId: number) => {},
     onDeleteExistingItem: (targetId: number) => {},
     onFinishExistingItem: (targetId: number, isDone: boolean) => {},
 });
@@ -92,25 +95,26 @@ const ListLayout = (): JSX.Element => {
     return (
         <>
             <main className="main">
-                <TodoContext.Provider value={{
-                    todoList,
-                    onCreateNewTodoItem,
-                    onUpdateExistingItem,
-                    onDeleteExistingItem,
-                    onFinishExistingItem
-                }}>
-                    <section className="section">
-                        <EditorView />
-                    </section>
-                    
-                    <section className="section">
-                        <ToDoList />
-                    </section>
+                <TodoStateContext.Provider value={{todoList}}>
+                    <TodoDispatchContext.Provider value={{
+                        onCreateNewTodoItem,
+                        onDeleteExistingItem,
+                        onFinishExistingItem,
+                        onUpdateExistingItem
+                    }}>
+                        <section className="section">
+                            <EditorView />
+                        </section>
+                        
+                        <section className="section">
+                            <ToDoList />
+                        </section>
 
-                    <section className="section">
-                        <FinishedTodoList />
-                    </section>
-                </TodoContext.Provider>
+                        <section className="section">
+                            <FinishedTodoList />
+                        </section>
+                    </TodoDispatchContext.Provider>
+                </TodoStateContext.Provider>
             </main>
         </>
     )

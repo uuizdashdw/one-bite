@@ -7,12 +7,18 @@ import { memo, useContext } from 'react';
 import '../../css/TodoItem.css';
 
 // Context
-import { TodoContext } from '../../Layout/ListLayout';
+import { TodoDispatchContext } from '../../Layout/ListLayout';
+
+//Type
+import { TodoDispatchContextType } from '../../TodoTypes';
 
 
 const TodoItem = ({ id, isDone, content, date  }: TodoItemType): JSX.Element => {
 
-    const { onUpdateExistingItem, onDeleteExistingItem, onFinishExistingItem } = useContext(TodoContext);
+    const { 
+        onUpdateExistingItem, 
+        onDeleteExistingItem, 
+        onFinishExistingItem } = useContext<TodoDispatchContextType>(TodoDispatchContext);
 
     // Change Checkbox Value
     const onChangeCheckboxValue = (): void => {

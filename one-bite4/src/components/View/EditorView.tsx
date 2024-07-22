@@ -5,11 +5,14 @@ import '../../css/EditorView.css';
 
 
 // Context
-import { TodoContext } from '../../Layout/ListLayout';
+import { TodoDispatchContext } from '../../Layout/ListLayout';
+
+//Type
+import { TodoDispatchContextType } from '../../TodoTypes';
 
 const EditorView = (): JSX.Element => {
     
-    const { onCreateNewTodoItem } = useContext(TodoContext);
+    const { onCreateNewTodoItem } = useContext<TodoDispatchContextType>(TodoDispatchContext);
     
     // Content State 
     const [content, setContent] = useState('');

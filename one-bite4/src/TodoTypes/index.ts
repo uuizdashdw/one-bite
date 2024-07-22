@@ -5,7 +5,7 @@ export interface TodoItemType {
     date: string;
 }
 
-type TodoItemList = TodoItemType[];
+export type TodoItemList = TodoItemType[];
 
 export interface AppState {
     todoList: TodoItemList;
@@ -42,8 +42,11 @@ export type Action = CreateAction | UpdateAction | DeleteAction | RemoveAction |
 
 
 // Context
-export interface TodoContextType {
+export interface TodoStateContextType {
     todoList: AppState;
+}
+
+export interface TodoDispatchContextType {
     onCreateNewTodoItem: (content: string) => void;
     onUpdateExistingItem: (targetId: number) => void;
     onDeleteExistingItem: (targetId: number) => void;
