@@ -14,7 +14,7 @@ export interface HeaderProps {
 // Diary Type
 export interface Diary {
     id: number;
-    createdDate: string;
+    createdDate: number;
     emotionId: number;
     content: string;
 }
@@ -44,7 +44,7 @@ interface DeleteDiary {
 export type Action = AddDiary | UpdateDiary | DeleteDiary;
 
 export interface DiaryDispatchContextType {
-    onCreateNewDiary: (createdDate: string, emotionId: number, content: string) => void; 
-    onUpdateDiary: (id: number, createdDate: string, emotionId: number, content: string) => void; 
+    onCreateNewDiary: (createdDate: number, emotionId: number, content: string) => void; 
+    onUpdateDiary: (id: number, createdDate: number, emotionId: number, content: string) => void; 
     onDeletetheDiary: (id: number) => void;
 }
