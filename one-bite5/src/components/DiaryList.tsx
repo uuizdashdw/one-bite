@@ -15,7 +15,8 @@ const DiaryList = (): JSX.Element => {
                     <option value={"oldest"}>오래된 순</option>
                 </select>
                 <Button text={"새로운 일기 쓰기"} 
-                        type={"POSITIVE"} />
+                        type={"POSITIVE"}
+                        onClick={() => console.log('')} />
             </div>
             <div className="list_wrapper">
                 <DiaryItem />

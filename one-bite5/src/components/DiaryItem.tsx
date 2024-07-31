@@ -25,7 +25,9 @@ const DiaryItem = (): JSX.Element => {
                 </div>
             </div>
             <div className="btn_section">
-                <Button text="수정하기" type="" />
+                <Button text="수정하기" 
+                        type=""
+                        onClick={() => console.log('')} />
             </div>
         </div>
     )

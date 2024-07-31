@@ -1,7 +1,7 @@
 export interface ButtonProps {
     text: string;
     type: string;
-    // onClick: () => void;
+    onClick: () => void;
 }
 
 export interface HeaderProps {
