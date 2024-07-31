@@ -104,29 +104,12 @@ const App = (): JSX.Element => {
 
   return (
     <>
-    <Header 
-      title={new Date().toLocaleDateString()} 
-      leftChild={<Button text='left' type='left' onClick={() => console.log('left')} />} 
-      rightChild={<Button text='right' type='right' onClick={() => console.log('right')} />} />
-
-    <Button text={"이동"} type={"default"} onClick={() => console.log('clicked')} />
-    <Button text={"123"} type='NEGATIVE' onClick={() => console.log('NEGATIVE')} />
-    <Button text='123' type='POSITIVE' onClick={() => console.log('POSITIVE')} />
-   
-    <button onClick={() => 
-      onCreateNewDiary(new Date().toLocaleDateString(), 1, 'hello')}>일기 추가 테스트</button>
-
-    <button onClick={() => 
-      onUpdateDiary(1, new Date().toLocaleDateString(), 3, '수정 됨')
-    }>일기 수정 테스트</button>
-
-    <button onClick={() => 
-      onDeletetheDiary(1)
-    }>일기 삭제 테스트</button>
-
     <DiaryStateContext.Provider value={MockData}>
       <DiaryDispatchContext.Provider value={
-        {onCreateNewDiary, onUpdateDiary, onDeletetheDiary}
+        { onCreateNewDiary, 
+          onUpdateDiary, 
+          onDeletetheDiary
+        }
       }>
         <Routes>
           <Route path='/' element={<HomeLayout />} />
