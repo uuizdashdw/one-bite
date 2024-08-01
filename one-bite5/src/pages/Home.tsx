@@ -1,4 +1,4 @@
-import { useState, useContext} from "react";
+import { useState, useContext, useEffect} from "react";
 
 // Components
 import Header from "../components/common/Header";
@@ -26,7 +26,6 @@ const Home = (): JSX.Element => {
     const [pivotDate, setPivotDate] = useState(new Date());
 
     const monthlyData = getMonthlyData(pivotDate, data);
-    console.log(monthlyData);
 
     // Increase the Month Handler
     const onInCreaseMonth = (): void => {
@@ -50,7 +49,7 @@ const Home = (): JSX.Element => {
                 leftChild={<Button text={"<"} type="" onClick={onDecreaseMonth} />}
                 rightChild={<Button text={">"} type="" onClick={onInCreaseMonth} />} />
                 
-            <DiaryList />
+            <DiaryList diaryList={monthlyData} />
         </div>
     )
 }

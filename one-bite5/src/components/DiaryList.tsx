@@ -2,10 +2,14 @@
 import Button from "./Button";
 import DiaryItem from "./DiaryItem";
 
+// Types
+import { Diary } from "../types";
+import type { DiaryList } from "../types";
+
 // Css
 import '../css/diaryList.css';
 
-const DiaryList = (): JSX.Element => {
+const DiaryList = ({ diaryList }: DiaryList): JSX.Element => {
 
     return (
         <div className="DiaryList">
@@ -19,7 +23,8 @@ const DiaryList = (): JSX.Element => {
                         onClick={() => console.log('')} />
             </div>
             <div className="list_wrapper">
-                <DiaryItem />
+                {/* <DiaryItem /> */}
+                {diaryList.map((item: Diary) => <DiaryItem key={item.id} {...item} />)}
             </div>
         </div>
     )
