@@ -6,10 +6,15 @@ import DiaryItem from "./DiaryItem";
 import { Diary } from "../types";
 import type { DiaryList } from "../types";
 
+// Navigate Hook
+import { useNavigate } from "react-router-dom";
+
 // Css
 import '../css/diaryList.css';
 
 const DiaryList = ({ diaryList }: DiaryList): JSX.Element => {
+
+    const navigation = useNavigate();
 
     return (
         <div className="DiaryList">
@@ -20,7 +25,7 @@ const DiaryList = ({ diaryList }: DiaryList): JSX.Element => {
                 </select>
                 <Button text={"새로운 일기 쓰기"} 
                         type={"POSITIVE"}
-                        onClick={() => console.log('')} />
+                        onClick={() => navigation('/new')} />
             </div>
             <div className="list_wrapper">
                 {/* <DiaryItem /> */}
