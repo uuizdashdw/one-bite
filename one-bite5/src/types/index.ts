@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 export interface ButtonProps {
     text: string;
     type: string;
@@ -55,4 +57,11 @@ export interface EmotionItemType {
     emotionId: number;
     emotionName: string;
     isSelected: boolean;
+    onClick?: MouseEventHandler<HTMLDivElement>;
+}
+
+// EmotionItem Click Event Prop Type
+export interface EmotionItemClickType {
+    name: string;
+    value: number;
 }
