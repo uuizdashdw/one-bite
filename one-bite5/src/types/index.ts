@@ -54,4 +54,5 @@ export interface DiaryDispatchContextType {
 export interface EmotionItemType {
     emotionId: number;
     emotionName: string;
+    isSelected: boolean;
 }
