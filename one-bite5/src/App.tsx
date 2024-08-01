@@ -13,20 +13,10 @@ import EditLayout from './Layouts/EditLayout';
 import NotFoundLayout from './Layouts/NotFoundLayout';
 
 // Types
-import { Diary, Action, DiaryDispatchContextType } from './types';
+import { Diary, DiaryDispatchContextType } from './types';
 
-// reducer setting
-const reducer = (state: Diary[], action: Action): Diary[] => {
-  switch(action.type){
-    case "CREATE" : return [action.data, ...state];
-    case "UPDATE" : 
-      return state.map((item: Diary) => item.id === action.data.id ? action.data : item);
-    case "DELETE" :
-      return state.filter((item) => item.id !== action.id);
-    default :
-      return state;
-  }
-}
+// Reducer
+import { reducer } from './reducer/Reducer';
 
 // Mock Data
 const MockData: Diary[] = [

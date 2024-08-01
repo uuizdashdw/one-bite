@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect} from "react";
+import { useState, useContext } from "react";
 
 // Components
 import Header from "../components/common/Header";
@@ -8,17 +8,8 @@ import DiaryList from "../components/DiaryList";
 // Context
 import { DiaryStateContext } from "../App";
 
-// Types 
-import { Diary } from "../types";
-
-// Filtering Diaries
-const getMonthlyData = (pivotDate: Date, data: Diary[]) => {
-    // Year, Month, Day, Hour, Minute, Seconds
-    const beginTime = new Date(pivotDate.getFullYear(), pivotDate.getMonth(), 1, 0, 0, 0).getTime();
-    const endTime = new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1, 0, 23, 59 ,59).getTime();
-
-    return data.filter((item: Diary) => beginTime <= item.createdDate && item.createdDate <= endTime)
-}
+// Filtering Diaries Util
+import { getMonthlyData } from "../utils/get-monthly-data";
 
 const Home = (): JSX.Element => {
 

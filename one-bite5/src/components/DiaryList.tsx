@@ -34,7 +34,6 @@ const DiaryList = ({ diaryList }: DiaryList): JSX.Element => {
             } else {
                 return b.createdDate - a.createdDate;
             }
-            
         })
     }
 
