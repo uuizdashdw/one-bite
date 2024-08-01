@@ -60,16 +60,26 @@ const Editor = (): JSX.Element => {
         return `${year}-${month}-${date}`;
     }
 
-    // Change Date Input Data 
-    const onChangeDateInput = (e: ChangeEvent<HTMLInputElement>): void => {
+    // Change Date or TextArea Input Data 
+    const onChangeInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         
         const name: string = e.target.name;
-        const value: Date = new Date(e.target.value);
+        let dateValue: Date = new Date(e.target.value);
+        const contentValue: string = e.target.value;
+
+        if(name === 'createdDate') {
+            dateValue = new Date(dateValue);
+            setInput({
+                ...input,
+                [name]: dateValue,
+            });
+            return;
+        } 
 
         setInput({
             ...input,
-            [name]: value,
-        })
+            [name]: contentValue,
+        });
     }
 
     // Change Emotion Data
@@ -91,7 +101,7 @@ const Editor = (): JSX.Element => {
                 <input type='date' 
                        name='createdDate'
                        value={getStringedDate(input.createdDate)}
-                       onChange={(e) => onChangeDateInput(e)} />
+                       onChange={(e) => onChangeInput(e)} />
             </section>
             <section className='emotion_section'>
                 <h4>오늘의 감정</h4>
@@ -108,7 +118,10 @@ const Editor = (): JSX.Element => {
             </section>
             <section className='content_section'>
                 <h4>오늘의 일기</h4>
-                <textarea placeholder='오늘 하루는 어땠나요?' />
+                <textarea placeholder='오늘 하루는 어땠나요?'
+                          name='content'
+                          value={input.content}
+                          onChange={(e) => onChangeInput(e)} />
             </section>
             <section className='btn_section'>
                 <Button text='취소하기' type='' onClick={console.log} />
