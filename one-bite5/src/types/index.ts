@@ -7,7 +7,7 @@ export interface ButtonProps {
 export interface HeaderProps {
     title: string;
     leftChild: React.ReactNode;
-    rightChild: React.ReactNode;
+    rightChild?: React.ReactNode;
 }
 
 
@@ -47,4 +47,11 @@ export interface DiaryDispatchContextType {
     onCreateNewDiary: (createdDate: number, emotionId: number, content: string) => void; 
     onUpdateDiary: (id: number, createdDate: number, emotionId: number, content: string) => void; 
     onDeletetheDiary: (id: number) => void;
+}
+
+
+// EmotionItem Prop Types
+export interface EmotionItemType {
+    emotionId: number;
+    emotionName: string;
 }
