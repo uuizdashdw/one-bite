@@ -5,7 +5,7 @@ import './../css/editor.css'
 import { ChangeEvent, useState } from 'react';
 
 // Types
-import { EmotionItemType, EmotionItemClickType } from '../types';
+import { EmotionItemType, EmotionItemClickType, onSubmitDiary } from '../types';
 
 // Components
 import EmotionItem from './EmotionItem';
@@ -40,7 +40,7 @@ const emotionList: EmotionItemType[] = [
     }
 ]
 
-const Editor = (): JSX.Element => {
+const Editor = ({ onSubmit }: onSubmitDiary): JSX.Element => {
 
     const [input, setInput] = useState({
         createdDate: new Date(),
@@ -83,15 +83,24 @@ const Editor = (): JSX.Element => {
     }
 
     // Change Emotion Data
-    const onChangeEmotionData = (target: EmotionItemClickType) => {
+    const onChangeEmotionData = (target: EmotionItemClickType): void => {
         const name = target.name;
         const value = target.value;
 
-        console.log();
         setInput({
             ...input,
             [name]: value,
         })
+    }
+
+    // Submit the Data
+    const onSubmitData = (): void => {
+        const newInput = {
+            createdDate: input.createdDate.getTime(),
+            emotionId: input.emotionId,
+            content: input.content,
+        }
+        onSubmit(newInput);
     }
 
     return (
@@ -125,7 +134,9 @@ const Editor = (): JSX.Element => {
             </section>
             <section className='btn_section'>
                 <Button text='취소하기' type='' onClick={console.log} />
-                <Button text='작성하기' type='POSITIVE' onClick={console.log} />
+                <Button text='작성하기' 
+                        type='POSITIVE' 
+                        onClick={onSubmitData} />
             </section>
         </div>
     )

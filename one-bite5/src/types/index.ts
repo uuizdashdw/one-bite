@@ -65,3 +65,8 @@ export interface EmotionItemClickType {
     name: string;
     value: number;
 }
+
+// Submit Diary Data Type
+export interface onSubmitDiary {
+    onSubmit: (input: Omit<Diary, 'id'>) => void;
+}
