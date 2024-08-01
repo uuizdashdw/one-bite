@@ -6,20 +6,44 @@ import DiaryItem from "./DiaryItem";
 import { Diary } from "../types";
 import type { DiaryList } from "../types";
 
-// Navigate Hook
+// Hooks
 import { useNavigate } from "react-router-dom";
+import { ChangeEvent, useState } from "react";
 
 // Css
 import '../css/diaryList.css';
 
 const DiaryList = ({ diaryList }: DiaryList): JSX.Element => {
 
+    // Navigate Hook
     const navigation = useNavigate();
+
+    // Sort 기준
+    const [sortType, setSortType] = useState("latest");
+
+    // Change the Sort 기준
+    const onChangeSortType = (e: ChangeEvent<HTMLSelectElement>): void => {
+        setSortType(e.target.value);
+    }
+
+    // Sort 기준 Sorting
+    const getSortedData = (): Diary[] => {
+        return [...diaryList].sort((a, b): number => {
+            if(sortType === "oldest") {
+                return a.createdDate - b.createdDate;
+            } else {
+                return b.createdDate - a.createdDate;
+            }
+            
+        })
+    }
+
+    const sortedData = getSortedData();
 
     return (
         <div className="DiaryList">
             <div className="menu_bar">
-                <select>
+                <select onChange={(e) => onChangeSortType(e)}>
                     <option value={"latest"}>최신순</option>
                     <option value={"oldest"}>오래된 순</option>
                 </select>
@@ -29,7 +53,7 @@ const DiaryList = ({ diaryList }: DiaryList): JSX.Element => {
             </div>
             <div className="list_wrapper">
                 {/* <DiaryItem /> */}
-                {diaryList.map((item: Diary) => <DiaryItem key={item.id} {...item} />)}
+                {sortedData.map((item: Diary) => <DiaryItem key={item.id} {...item} />)}
             </div>
         </div>
     )
