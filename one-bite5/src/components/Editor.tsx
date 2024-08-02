@@ -2,13 +2,13 @@
 import './../css/editor.css'
 
 // State Hook
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
 
 // Navigate Hook
 import { useNavigate } from 'react-router-dom';
 
 // Types
-import { EmotionItemType, EmotionItemClickType, onSubmitDiary } from '../types';
+import { Diary, EmotionItemType, EmotionItemClickType, onSubmitDiary } from '../types';
 
 // Components
 import EmotionItem from './EmotionItem';
@@ -43,7 +43,7 @@ const emotionList: EmotionItemType[] = [
     }
 ]
 
-const Editor = ({ onSubmit }: onSubmitDiary): JSX.Element => {
+const Editor = ({ initData, onSubmit }: onSubmitDiary): JSX.Element => {
 
     // initial Input Datas
     const [input, setInput] = useState({
@@ -54,6 +54,17 @@ const Editor = ({ onSubmit }: onSubmitDiary): JSX.Element => {
 
     // Navigation
     const navigation = useNavigate();
+
+    useEffect(() => {
+
+        if(initData){
+
+            setInput({ 
+                ...initData, 
+                createdDate: new Date(initData.createdDate),
+            });
+        }
+    }, [initData])
 
     // Date Format Changed to YYYY-MM-DD
     const getStringedDate = (targetDate: Date): string => {
