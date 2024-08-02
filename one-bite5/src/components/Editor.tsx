@@ -4,6 +4,9 @@ import './../css/editor.css'
 // State Hook
 import { ChangeEvent, useState } from 'react';
 
+// Navigate Hook
+import { useNavigate } from 'react-router-dom';
+
 // Types
 import { EmotionItemType, EmotionItemClickType, onSubmitDiary } from '../types';
 
@@ -48,6 +51,9 @@ const Editor = ({ onSubmit }: onSubmitDiary): JSX.Element => {
         emotionId: 3,
         content: "",
     });
+
+    // Navigation
+    const navigation = useNavigate();
 
     // Date Format Changed to YYYY-MM-DD
     const getStringedDate = (targetDate: Date): string => {
@@ -134,7 +140,9 @@ const Editor = ({ onSubmit }: onSubmitDiary): JSX.Element => {
                           onChange={(e) => onChangeInput(e)} />
             </section>
             <section className='btn_section'>
-                <Button text='취소하기' type='' onClick={console.log} />
+                <Button text='취소하기' 
+                        type='' 
+                        onClick={() => navigation(-1)} />
                 <Button text='작성하기' 
                         type='POSITIVE' 
                         onClick={onSubmitData} />
