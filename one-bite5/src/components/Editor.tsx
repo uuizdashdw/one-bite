@@ -42,6 +42,7 @@ const emotionList: EmotionItemType[] = [
 
 const Editor = ({ onSubmit }: onSubmitDiary): JSX.Element => {
 
+    // initial Input Datas
     const [input, setInput] = useState({
         createdDate: new Date(),
         emotionId: 3,

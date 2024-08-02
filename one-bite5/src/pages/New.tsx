@@ -22,6 +22,7 @@ const New = (): JSX.Element => {
     // Submit the Data Function for Prop
     const onSubmit = (input: Omit<Diary, 'id'>): void => {
         onCreateNewDiary(input.createdDate, input.emotionId, input.content);
+        navigation('/', { replace: true });
     }
 
     return (
