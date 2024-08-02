@@ -6,6 +6,8 @@ import Button from "./Button";
 
 // Css
 import './../css/diaryItem.css';
+
+// Type
 import { Diary } from "../types";
 
 // Navigate Hook

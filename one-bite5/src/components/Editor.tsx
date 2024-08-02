@@ -8,7 +8,7 @@ import { ChangeEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Types
-import { Diary, EmotionItemType, EmotionItemClickType, onSubmitDiary } from '../types';
+import { EmotionItemType, EmotionItemClickType, onSubmitDiary } from '../types';
 
 // Components
 import EmotionItem from './EmotionItem';
@@ -154,7 +154,7 @@ const Editor = ({ initData, onSubmit }: onSubmitDiary): JSX.Element => {
                 <Button text='취소하기' 
                         type='' 
                         onClick={() => navigation(-1)} />
-                <Button text='작성하기' 
+                <Button text='작성완료' 
                         type='POSITIVE' 
                         onClick={onSubmitData} />
             </section>

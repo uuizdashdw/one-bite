@@ -91,7 +91,7 @@ const App = (): JSX.Element => {
 
   return (
     <>
-    <DiaryStateContext.Provider value={MockData}>
+    <DiaryStateContext.Provider value={data}>
       <DiaryDispatchContext.Provider value={
         { onCreateNewDiary, 
           onUpdateDiary, 

@@ -51,7 +51,6 @@ const DiaryList = ({ diaryList }: DiaryList): JSX.Element => {
                         onClick={() => navigation('/new')} />
             </div>
             <div className="list_wrapper">
-                {/* <DiaryItem /> */}
                 {sortedData.map((item: Diary) => <DiaryItem key={item.id} {...item} />)}
             </div>
         </div>

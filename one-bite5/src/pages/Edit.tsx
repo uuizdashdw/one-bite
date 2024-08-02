@@ -17,7 +17,7 @@ const Edit = (): JSX.Element => {
     const params = useParams();
     const navigation = useNavigate();
 
-    const { onDeletetheDiary } = useContext(DiaryDispatchContext);
+    const { onDeletetheDiary, onUpdateDiary } = useContext(DiaryDispatchContext);
     const data = useContext(DiaryStateContext);
 
     const [currentDiary, setCurrentDiary] = useState<Diary>({
@@ -45,8 +45,22 @@ const Edit = (): JSX.Element => {
         } else {
             setCurrentDiary(currentDiaryItem);
         }
-        
+
     }, [params.id, data, navigation]);
+
+    // 수정하기 페이지 작성 완료 이벤트 핸들러
+    const onSubmit = (input: Omit<Diary, 'id'>) => {
+        if(confirm('일기를 수정하시겠습니까?')){
+            onUpdateDiary(
+                Number(params.id),
+                input.createdDate,
+                input.emotionId,
+                input.content, 
+            );
+
+            navigation('/', { replace: true });
+        }
+    }
 
     return (
         <div>
@@ -55,7 +69,7 @@ const Edit = (): JSX.Element => {
                     rightChild={<Button text="> 삭제하기" type="NEGATIVE" onClick={onDeleteTheDiary}/>} />
         
             <Editor initData={currentDiary} 
-                    onSubmit={console.log} />
+                    onSubmit={onSubmit} />
         </div>
     )
 }
