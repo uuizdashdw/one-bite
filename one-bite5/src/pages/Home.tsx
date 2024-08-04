@@ -19,10 +19,21 @@ const Home = (): JSX.Element => {
     const monthlyData = getMonthlyData(pivotDate, data);
 
     // Increase the Month Handler
-    const onInCreaseMonth = (): void => {
-        setPivotDate(
-            new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1)
-        );
+    const onIncreaseMonth = (): void => {
+        const nowMonth = new Date().getMonth() + 1;
+        const prevMonth = pivotDate.getMonth() + 1;
+
+        if(prevMonth >= nowMonth) {
+            setPivotDate(
+                new Date(pivotDate.getFullYear(), prevMonth - 1)
+            ); 
+        } else {
+            setPivotDate(
+                new Date(pivotDate.getFullYear(), prevMonth)
+            );
+        }
+
+        if(prevMonth === nowMonth - 1 || prevMonth === nowMonth) alert('9월은 9월에...');
     };
 
     // Decrease the Month Handler
@@ -38,7 +49,7 @@ const Home = (): JSX.Element => {
                 title={`${pivotDate.getFullYear()}년 
                         ${pivotDate.getMonth() + 1}월`}
                 leftChild={<Button text={"<"} type="" onClick={onDecreaseMonth} />}
-                rightChild={<Button text={">"} type="" onClick={onInCreaseMonth} />} />
+                rightChild={<Button text={">"} type="" onClick={onIncreaseMonth} />} />
                 
             <DiaryList diaryList={monthlyData} />
         </div>
