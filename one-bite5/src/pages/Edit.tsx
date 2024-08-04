@@ -6,8 +6,11 @@ import Button from "../components/Button";
 import Editor from "../components/Editor";
 
 // Contexts & Hooks
-import { useContext, useEffect, useState } from "react";
-import { DiaryDispatchContext, DiaryStateContext } from "../App";
+import { useContext } from "react";
+import { DiaryDispatchContext } from "../App";
+
+// Customized Hook
+import useDiary from "../hooks/useDiary";
 
 // Type
 import { Diary } from "../types";
@@ -18,14 +21,9 @@ const Edit = (): JSX.Element => {
     const navigation = useNavigate();
 
     const { onDeletetheDiary, onUpdateDiary } = useContext(DiaryDispatchContext);
-    const data = useContext(DiaryStateContext);
-
-    const [currentDiary, setCurrentDiary] = useState<Diary>({
-        id: 0,
-        emotionId: 0,
-        createdDate: 0,
-        content: ''
-    });
+    
+    const currentDiary = useDiary(params.id as string);
+    
 
     // Remove the Diary
     const onDeleteTheDiary = (): void => {
@@ -34,19 +32,6 @@ const Edit = (): JSX.Element => {
             navigation('/', { replace: true });
         }
     }
-
-    // params.id 와 일치하는 일기 data 를 찾는 로직
-    useEffect(() => {
-        const currentDiaryItem = data.find((item: Diary) => item.id === Number(params.id));
-        
-        if(!currentDiaryItem) {
-            alert("유효하지 않은 일기입니다");
-            navigation("/", { replace: true });
-        } else {
-            setCurrentDiary(currentDiaryItem);
-        }
-
-    }, [params.id, data, navigation]);
 
     // 수정하기 페이지 작성 완료 이벤트 핸들러
     const onSubmit = (input: Omit<Diary, 'id'>) => {
