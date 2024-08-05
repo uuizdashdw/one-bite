@@ -1,6 +1,6 @@
 import './App.css'
 
-import { useReducer, useRef, createContext } from 'react';
+import { useReducer, useRef, createContext, useEffect } from 'react';
 
 // Router
 import { Routes, Route } from 'react-router-dom';
@@ -18,28 +18,6 @@ import { Diary, DiaryDispatchContextType } from './types';
 // Reducer
 import { reducer } from './reducer/Reducer';
 
-// Mock Data
-const MockData: Diary[] = [
-  {
-    id: 1,
-    createdDate: new Date("2024-08-13").getTime(),
-    emotionId: 1,
-    content: '1번 일기 내용'
-  },
-  {
-    id: 2,
-    createdDate: new Date("2024-08-30").getTime(),
-    emotionId: 2,
-    content: '2번 일기 내용'
-  },
-  {
-    id: 3,
-    createdDate: new Date("2024-07-06").getTime(),
-    emotionId: 3,
-    content: '3번 일기 내용'
-  }
-]
-
 const initialDispatchContextValue: DiaryDispatchContextType = {
   onCreateNewDiary: () => {},
   onUpdateDiary: () => {},
@@ -47,13 +25,34 @@ const initialDispatchContextValue: DiaryDispatchContextType = {
 }
 
 // Context
-export const DiaryStateContext = createContext(MockData);
+export const DiaryStateContext = createContext<Diary[]>([]);
 export const DiaryDispatchContext = createContext<DiaryDispatchContextType>(initialDispatchContextValue);
 
 const App = (): JSX.Element => {
 
-  const [data, disaptch] = useReducer(reducer, MockData);
-  const idRef = useRef(3);
+  const [data, disaptch] = useReducer(reducer, []);
+  const idRef = useRef(0);
+
+  useEffect(() => {
+    // Get Diary Data from Local Storage
+    const storedData = localStorage.getItem("diary");
+    if(!storedData) return;
+    const parsedData: Diary[] = JSON.parse(storedData);
+
+    // ParsedData Checking
+    if(!Array.isArray(parsedData)) return;
+    let maxId = 0;
+
+    parsedData.forEach((item) => {
+      if(item.id > maxId) maxId = item.id;
+    });
+    
+    idRef.current = maxId + 1;
+    disaptch({
+      type: "INIT",
+      data: parsedData
+    });
+  }, []);
 
   // Create New Diary
   const onCreateNewDiary = (createdDate: number, emotionId: number, content: string): void => {
@@ -78,7 +77,7 @@ const App = (): JSX.Element => {
         emotionId,
         content,
       }
-    })
+    });
   }
 
   // Delete the Diary
@@ -86,7 +85,7 @@ const App = (): JSX.Element => {
     disaptch({
       type: "DELETE",
       id
-    })
+    });
   }
 
   return (

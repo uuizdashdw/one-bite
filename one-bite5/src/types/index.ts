@@ -43,7 +43,12 @@ interface DeleteDiary {
     id: number;
 }
 
-export type Action = AddDiary | UpdateDiary | DeleteDiary;
+interface InitDiary {
+    type: 'INIT'
+    data: Diary[];
+}
+
+export type Action = InitDiary | AddDiary | UpdateDiary | DeleteDiary;
 
 export interface DiaryDispatchContextType {
     onCreateNewDiary: (createdDate: number, emotionId: number, content: string) => void; 
