@@ -1,6 +1,6 @@
 import './App.css'
 
-import { useReducer, useRef, createContext, useEffect } from 'react';
+import { useReducer, useRef, createContext, useEffect, useState } from 'react';
 
 // Router
 import { Routes, Route } from 'react-router-dom';
@@ -30,17 +30,18 @@ export const DiaryDispatchContext = createContext<DiaryDispatchContextType>(init
 
 const App = (): JSX.Element => {
 
+  const [isLoading, setIsLoading] = useState(true);
   const [data, disaptch] = useReducer(reducer, []);
   const idRef = useRef(0);
 
   useEffect(() => {
     // Get Diary Data from Local Storage
     const storedData = localStorage.getItem("diary");
-    if(!storedData) return;
+    if(!storedData) return setIsLoading(false);
     const parsedData: Diary[] = JSON.parse(storedData);
 
     // ParsedData Checking
-    if(!Array.isArray(parsedData)) return;
+    if(!Array.isArray(parsedData)) return setIsLoading(false);
     let maxId = 0;
 
     parsedData.forEach((item) => {
@@ -52,6 +53,8 @@ const App = (): JSX.Element => {
       type: "INIT",
       data: parsedData
     });
+
+    setIsLoading(false);
   }, []);
 
   // Create New Diary
@@ -88,6 +91,8 @@ const App = (): JSX.Element => {
     });
   }
 
+  if(isLoading) return <div>로딩 중 입니다...</div>
+  
   return (
     <>
     <DiaryStateContext.Provider value={data}>
