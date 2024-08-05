@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { DiaryDispatchContext } from "../App";
 
+// Page Title Hook
+import usePageTitle from "../hooks/usePageTitle";
+
 // Type
 import { Diary } from "../types";
 
@@ -18,6 +21,7 @@ const New = (): JSX.Element => {
     const { onCreateNewDiary } = useContext(DiaryDispatchContext);
 
     const navigation = useNavigate();
+    usePageTitle('새 일기 쓰기');
 
     // Submit the Data Function for Prop
     const onSubmit = (input: Omit<Diary, 'id'>): void => {

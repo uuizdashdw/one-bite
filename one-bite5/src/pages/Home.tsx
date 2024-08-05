@@ -11,10 +11,15 @@ import { DiaryStateContext } from "../App";
 // Filtering Diaries Util
 import { getMonthlyData } from "../utils/get-monthly-data";
 
+// Customized Page Title Hook
+import usePageTitle from "../hooks/usePageTitle";
+
 const Home = (): JSX.Element => {
 
     const data = useContext(DiaryStateContext);
     const [pivotDate, setPivotDate] = useState(new Date());
+    
+    usePageTitle('나의 일기장');
 
     const monthlyData = getMonthlyData(pivotDate, data);
 

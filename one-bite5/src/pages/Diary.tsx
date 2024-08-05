@@ -9,10 +9,14 @@ import useDiary from "../hooks/useDiary";
 // Util Function Module
 import { getStringedDate } from "../utils/getStringedDate";
 
+// Customized Page Title Hook
+import usePageTitle from "../hooks/usePageTitle";
+
 const Diary = (): JSX.Element => {
 
     const params = useParams();
     const navigation = useNavigate();
+    usePageTitle(`${params.id}번 일기`);
 
     const currentDiary = useDiary(params.id as string);
 
